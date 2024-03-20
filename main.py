@@ -5,24 +5,19 @@ class Scheme:
         self.message = message
         
     def encrypt(self):
-        a = self.secret_key**self.message
-        encrypted_message = a%self.public_key
+        encrypted_message = (self.message**self.public_key)%self.secret_key
         return encrypted_message
     
-    def decrypt(self):
-        decrypted_message = (self.secret_key**self.message)%self.public_key
+    def decrypt(self, encrypted_message):
+        decrypted_message = (encrypted_message**self.secret_key)%self.public_key
         return decrypted_message  
 
 
 # Encrypting the message
-message = Scheme(11, 14, 2)  # Here, the public_key is 11 and the secret_key is 14
+message = Scheme(5, 14, 2)  # Here, the public_key is 5 and the secret_key is 14
 encrypted_data = message.encrypt()
-print(encrypted_data)
+print("Encrypted data:", encrypted_data)
 
 # Decrypting the encrypted message
-decrypted = Scheme(11, 14, encrypted_data)  # Here, the public_key is 11 and the secret_key is 14
-print(decrypted.decrypt())
-
-# # Convert decrypted value to alphabet
-# decrypted_alphabet = chr(decrypted_value + 95) if decrypted_value > 0 else 'a'
-# print(decrypted_alphabet)
+decrypted = message.decrypt(encrypted_data)
+print("Decrypted data:", decrypted)
